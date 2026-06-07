@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import { collection, query, getDocs, orderBy } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { Search, Filter, MoreVertical, Eye, Edit, Trash2, User, FileSpreadsheet, UserPlus, Users } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import Link from 'next/link';
 
 export default function StudentsPage() {

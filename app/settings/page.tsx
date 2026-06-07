@@ -14,6 +14,7 @@ import {
   CheckCircle2
 } from 'lucide-react';
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 
 export default function SettingsPage() {
   const { t, lang, setLang } = useI18n();

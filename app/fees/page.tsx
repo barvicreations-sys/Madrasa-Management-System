@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import { collection, addDoc, getDocs, serverTimestamp, query, orderBy } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { Wallet, Plus, Search, Filter, Calendar, CreditCard, Receipt, Clock, User } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 
 export default function FeesPage() {
   const { t } = useI18n();

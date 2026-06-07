@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { UserPlus, Save, ArrowLeft, Camera, ShieldCheck, GraduationCap, Phone, UserRound } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import Link from 'next/link';
 
 export default function AdmissionPage() {

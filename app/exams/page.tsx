@@ -6,7 +6,8 @@ import { useState, useEffect } from 'react';
 import { collection, addDoc, getDocs, query, orderBy, serverTimestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { GraduationCap, Trophy, Search, Plus, Calendar, BookOpen, Clock, Users, ArrowRight } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
+import Link from 'next/link';
 
 export default function ExamsPage() {
   const { t } = useI18n();

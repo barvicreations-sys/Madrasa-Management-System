@@ -17,7 +17,7 @@ import {
   LogOut,
   ChevronRight
 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 const menuItems = [
   { icon: LayoutDashboard, label: 'dashboard', urduLabel: 'ڈیش بورڈ', href: '/', roles: ['admin', 'teacher', 'accountant'] },
