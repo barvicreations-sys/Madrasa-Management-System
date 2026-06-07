@@ -1,0 +1,84 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // --- Global Helpers ---
+    function isSignedIn() { return request.auth != null; }
+    function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+    function getUserData() { return get(/databases/$(database)/documents/users/$(request.auth.uid)).data; }
+    
+    function isAdmin() { return isSignedIn() && getUserData().role == 'admin'; }
+    function isTeacher() { return isSignedIn() && getUserData().role == 'teacher'; }
+    function isAccountant() { return isSignedIn() && getUserData().role == 'accountant'; }
+
+    // --- Validation Helpers ---
+    function isValidStudent(data) {
+      return data.keys().hasAll(['regNo', 'name', 'classId']) &&
+             data.name is string && data.name.size() <= 100 &&
+             data.regNo is string && data.regNo.size() <= 50;
+    }
+
+    function isValidFee(data) {
+      return data.keys().hasAll(['studentId', 'amount', 'type']) &&
+             data.amount is number && data.amount > 0;
+    }
+
+    function isTimestampValid(data, isUpdate) {
+      return isUpdate ? data.updatedAt == request.time : data.createdAt == request.time;
+    }
+
+    // --- Default Deny ---
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // --- Collection Rules ---
+
+    match /users/{uid} {
+      allow read: if isSignedIn() && (request.auth.uid == uid || isAdmin());
+      allow create: if isSignedIn() && request.auth.uid == uid && incoming().role in ['admin', 'teacher', 'accountant'];
+      allow update: if isAdmin();
+    }
+
+    match /students/{studentId} {
+      allow read: if isSignedIn();
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /teachers/{teacherId} {
+      allow read: if isSignedIn();
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /classes/{classId} {
+      allow read: if isSignedIn();
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /attendance/{id} {
+      allow read: if isSignedIn();
+      allow create, update: if isAdmin() || isTeacher();
+      allow delete: if isAdmin();
+    }
+
+    match /fees/{id} {
+      allow read: if isAdmin() || isAccountant();
+      allow create, update: if isAdmin() || isAccountant();
+      allow delete: if isAdmin();
+    }
+
+    match /exams/{id} {
+      allow read: if isSignedIn();
+      allow create, update: if isAdmin() || isTeacher();
+      allow delete: if isAdmin();
+    }
+
+    match /results/{id} {
+      allow read: if isSignedIn();
+      allow create, update: if isAdmin() || isTeacher();
+      allow delete: if isAdmin();
+    }
+  }
+}

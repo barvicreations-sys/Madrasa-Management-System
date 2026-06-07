@@ -1,0 +1,8 @@
+{
+  "name": "Jamia Naqshbandia Management System",
+  "description": "Comprehensive school management system for Jamia Naqshbandia Baravia Razvia, providing administrative controls for admissions, students, attendance, and fee management.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
