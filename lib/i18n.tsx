@@ -26,7 +26,13 @@ const translations = {
     pendingFees: 'Pending Fees',
     recentAdmissions: 'Recent Admissions',
     newStudent: 'New Student',
-    export: 'Export'
+    export: 'Export',
+    idCard: 'ID Card',
+    print: 'Print',
+    fatherName: 'Father\'s Name',
+    regNo: 'Reg. No',
+    studentClass: 'Class',
+    dob: 'Date of Birth'
   },
   ur: {
     dashboard: 'ڈیش بورڈ',
@@ -51,7 +57,13 @@ const translations = {
     pendingFees: 'بقایاجات',
     recentAdmissions: 'تازہ ترین داخلے',
     newStudent: 'نیا طالب علم',
-    export: 'ایکسپورٹ'
+    export: 'ایکسپورٹ',
+    idCard: 'شناختی کارڈ',
+    print: 'پرنٹ',
+    fatherName: 'والد کا نام',
+    regNo: 'رجسٹریشن نمبر',
+    studentClass: 'درجہ',
+    dob: 'تاریخ پیدائش'
   }
 };
 
