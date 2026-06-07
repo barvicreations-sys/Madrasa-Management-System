@@ -1,62 +1,52 @@
 'use client';
 
+import React from 'react';
 import { useI18n } from '@/lib/i18n';
-import { useAuth } from '@/lib/auth-context';
-import { User, LogOut, Bell, Search, Globe } from 'lucide-react';
-import { useState } from 'react';
+import { Bell, Search, Globe, User } from 'lucide-react';
 
 export default function Header() {
   const { t, lang, setLang } = useI18n();
-  const { user, role, logout } = useAuth();
-  const [showProfile, setShowProfile] = useState(false);
 
   return (
-    <header className="h-20 bg-islamic-green border-b-4 border-islamic-gold flex items-center justify-between px-8 text-white sticky top-0 z-30 shadow-md">
-      <div className="flex items-center gap-4">
-        <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center border-2 border-islamic-gold shadow-sm">
-          <span className="text-islamic-green font-bold text-2xl urdu-font">ن</span>
-        </div>
-        <div className="leading-tight hidden sm:block">
-          <h1 className="urdu-font text-xl font-bold tracking-wide">{t('institutionName')}</h1>
-          <p className="text-[10px] font-medium opacity-80 uppercase tracking-widest">Jamia Naqshbandia Baravia Razvia • Faisalabad</p>
+    <header className="h-24 bg-white/80 backdrop-blur-md border-b border-slate-200 flex items-center justify-between px-8 sticky top-0 z-30">
+      <div className="flex-1 max-w-xl">
+        <div className="relative group">
+          <Search className="absolute inset-y-0 start-4 my-auto text-slate-400 group-focus-within:text-islamic-green transition-colors" size={18} />
+          <input 
+            type="text" 
+            placeholder={t('search')} 
+            className="w-full h-12 bg-slate-50 border-none rounded-2xl ps-12 pe-4 text-sm font-bold text-slate-600 focus:ring-2 focus:ring-islamic-green/20 focus:bg-white transition-all placeholder:text-slate-300"
+          />
         </div>
       </div>
 
-      <div className="flex items-center gap-6">
-        {/* Language Switcher */}
-        <div className="flex bg-black/20 rounded-lg p-1">
-          <button 
-            onClick={() => setLang('en')}
-            className={`px-3 py-1 text-[10px] font-bold rounded transition-all ${lang === 'en' ? 'bg-white text-islamic-green' : 'opacity-60 text-white'}`}
-          >
-            ENGLISH
-          </button>
-          <button 
-            onClick={() => setLang('ur')}
-            className={`px-3 py-1 text-[10px] font-bold rounded transition-all urdu-font ${lang === 'ur' ? 'bg-white text-islamic-green font-bold' : 'opacity-60 text-white'}`}
-          >
-            اردو
-          </button>
-        </div>
+      <div className="flex items-center gap-4 ms-8">
+        <button 
+          onClick={() => setLang(lang === 'en' ? 'ur' : 'en')}
+          className="flex items-center gap-2 px-4 py-2 bg-slate-50 hover:bg-islamic-green/5 rounded-xl transition-colors group"
+        >
+          <Globe size={18} className="text-slate-400 group-hover:text-islamic-green" />
+          <span className="text-[10px] font-black uppercase tracking-widest text-slate-600">
+            {lang === 'en' ? 'English' : 'اردو'}
+          </span>
+        </button>
 
-        <div className="h-8 w-px bg-white/20 hidden md:block"></div>
+        <button className="w-12 h-12 bg-slate-50 flex items-center justify-center rounded-xl text-slate-400 hover:text-islamic-green hover:bg-islamic-green/5 transition-all relative">
+          <Bell size={20} />
+          <span className="absolute top-3 right-3 w-2.5 h-2.5 bg-islamic-gold rounded-full border-2 border-white"></span>
+        </button>
 
-        <div className="flex items-center gap-3 text-right">
-          <div className="hidden lg:block leading-tight">
-            <p className="text-sm font-bold">{t('admin')}</p>
-            <p className="text-[10px] opacity-70">Logged in as {user?.displayName || 'Admin'}</p>
+        <div className="w-px h-8 bg-slate-200 mx-2"></div>
+
+        <button className="flex items-center gap-4 group">
+          <div className="text-right hidden sm:block">
+            <p className="text-xs font-black text-slate-800 leading-none">Admin User</p>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter mt-1">Super Admin</p>
           </div>
-          <div 
-            className="w-10 h-10 rounded-full bg-islamic-green-light border-2 border-white/30 flex items-center justify-center font-bold cursor-pointer hover:scale-105 transition-transform"
-            onClick={() => setShowProfile(!showProfile)}
-          >
-            {user?.photoURL ? (
-              <img src={user.photoURL} alt="" className="w-full h-full rounded-full" />
-            ) : (
-              user?.displayName?.substring(0, 2).toUpperCase() || 'AD'
-            )}
+          <div className="w-12 h-12 rounded-2xl bg-islamic-green/10 flex items-center justify-center text-islamic-green group-hover:bg-islamic-green group-hover:text-white transition-all shadow-lg shadow-islamic-green/5">
+            <User size={24} />
           </div>
-        </div>
+        </button>
       </div>
     </header>
   );

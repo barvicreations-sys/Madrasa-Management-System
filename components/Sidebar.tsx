@@ -1,91 +1,96 @@
 'use client';
 
+import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useI18n } from '@/lib/i18n';
-import { useAuth } from '@/lib/auth-context';
 import { 
   LayoutDashboard, 
   Users, 
-  UserSquare2, 
-  BookOpen, 
+  UserPlus, 
   CalendarCheck, 
   Wallet, 
   GraduationCap, 
-  FileText, 
-  Settings, 
+  BarChart3, 
+  Settings,
   LogOut,
-  ChevronRight
+  ShieldCheck
 } from 'lucide-react';
 import { motion } from 'motion/react';
+import { clsx } from 'clsx';
 
 const menuItems = [
-  { icon: LayoutDashboard, label: 'dashboard', urduLabel: 'ڈیش بورڈ', href: '/', roles: ['admin', 'teacher', 'accountant'] },
-  { icon: UserSquare2, label: 'admission', urduLabel: 'داخلہ', href: '/admission', roles: ['admin'] },
-  { icon: Users, label: 'students', urduLabel: 'طلباء', href: '/students', roles: ['admin', 'teacher', 'accountant'] },
-  { icon: Wallet, label: 'fees', urduLabel: 'فیس', href: '/fees', roles: ['admin', 'accountant'] },
-  { icon: CalendarCheck, label: 'attendance', urduLabel: 'حاضری', href: '/attendance', roles: ['admin', 'teacher'] },
-  { icon: GraduationCap, label: 'exams', urduLabel: 'امتحانات', href: '/exams', roles: ['admin', 'teacher'] },
-  { icon: BookOpen, label: 'teachers', urduLabel: 'اساتذہ', href: '/teachers', roles: ['admin'] },
-  { icon: FileText, label: 'reports', urduLabel: 'رپورٹس', href: '/reports', roles: ['admin', 'accountant'] },
-  { icon: Settings, label: 'settings', urduLabel: 'ترتیبات', href: '/settings', roles: ['admin'] },
+  { icon: LayoutDashboard, label: 'dashboard', href: '/', urdu: 'ڈیش بورڈ' },
+  { icon: Users, label: 'students', href: '/students', urdu: 'طلباء' },
+  { icon: UserPlus, label: 'admission', href: '/admission', urdu: 'داخلہ' },
+  { icon: CalendarCheck, label: 'attendance', href: '/attendance', urdu: 'حاضری' },
+  { icon: Wallet, label: 'fees', href: '/fees', urdu: 'فیس' },
+  { icon: GraduationCap, label: 'exams', href: '/exams', urdu: 'امتحانات' },
+  { icon: BarChart3, label: 'reports', href: '/reports', urdu: 'رپورٹس' },
+  { icon: Settings, label: 'settings', href: '/settings', urdu: 'ترتیبات' },
 ];
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const { t, dir } = useI18n();
-  const { role, logout } = useAuth();
-
-  const filteredItems = menuItems.filter(item => role && item.roles.includes(role));
+  const { t, lang } = useI18n();
 
   return (
-    <nav className="w-72 bg-islamic-green-dark text-emerald-50 p-6 border-r border-islamic-gold/30 flex flex-col h-screen sticky top-0 hidden md:flex shadow-2xl">
-      <div className="flex-1 space-y-2">
-        {filteredItems.map((item) => {
-          const Icon = item.icon;
+    <aside className="w-72 bg-white border-e border-slate-200 hidden lg:flex flex-col sticky top-0 h-screen">
+      <div className="p-8">
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 bg-islamic-green rounded-2xl flex items-center justify-center shadow-lg shadow-islamic-green/20">
+            <ShieldCheck className="text-white" size={28} />
+          </div>
+          <div>
+            <h1 className="font-black text-slate-800 leading-tight tracking-tight uppercase text-xs">Jamia Naqshbandia</h1>
+            <p className="text-[10px] text-slate-400 font-bold tracking-widest uppercase mt-0.5">Management</p>
+          </div>
+        </div>
+      </div>
+
+      <nav className="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
+        {menuItems.map((item) => {
           const isActive = pathname === item.href;
           return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`p-4 rounded-xl transition-all flex items-center justify-between group overflow-hidden relative ${
-                isActive 
-                ? 'bg-islamic-gold text-white shadow-lg' 
-                : 'hover:bg-white/10 opacity-80 hover:opacity-100'
-              }`}
-            >
-              <div className="flex items-center gap-3">
-                <Icon size={20} className={isActive ? 'text-white' : 'text-islamic-gold group-hover:scale-110 transition-transform'} />
-                <span className="text-sm font-bold tracking-wide">{t(item.label)}</span>
+            <Link key={item.href} href={item.href}>
+              <div className={clsx(
+                "group flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all duration-300 relative",
+                isActive ? "bg-islamic-green shadow-xl shadow-islamic-green/10" : "hover:bg-slate-50"
+              )}>
+                <item.icon className={clsx(
+                  "shrink-0 transition-colors",
+                  isActive ? "text-white" : "text-slate-400 group-hover:text-islamic-green"
+                )} size={22} />
+                <div className="flex-1">
+                  <p className={clsx(
+                    "text-xs font-black uppercase tracking-widest leading-none",
+                    isActive ? "text-white" : "text-slate-400 group-hover:text-slate-600"
+                  )}>{t(item.label)}</p>
+                  {lang === 'ur' && (
+                    <p className={clsx(
+                      "urdu-font text-sm mt-1 leading-none",
+                      isActive ? "text-white/80" : "text-slate-300 group-hover:text-islamic-green/60"
+                    )}>{item.urdu}</p>
+                  )}
+                </div>
+                {isActive && (
+                  <motion.div 
+                    layoutId="active-indicator"
+                    className="absolute inset-y-0 -start-4 w-1.5 bg-islamic-gold rounded-e-full"
+                  />
+                )}
               </div>
-              <span className={`urdu-font text-[10px] font-bold ${isActive ? 'text-white' : 'text-islamic-gold/70'}`}>
-                {item.urduLabel}
-              </span>
-              {isActive && (
-                <div className={`absolute ${dir === 'rtl' ? '-left-1' : '-right-1'} top-1/2 -translate-y-1/2 w-1.5 h-8 bg-white rounded-full`} />
-              )}
             </Link>
           );
         })}
-      </div>
+      </nav>
 
-      <div className="mt-auto pt-6 border-t border-white/10">
-        <div className="p-4 bg-emerald-900/40 rounded-2xl border border-white/5 mb-4">
-          <p className="text-[10px] text-emerald-300 font-bold uppercase tracking-widest mb-2">System Status</p>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse shadow-[0_0_8px_#34d399]"></div>
-            <span className="text-[10px] font-medium tracking-tight">Database Connected</span>
-          </div>
-        </div>
-
-        <button
-          onClick={logout}
-          className="flex items-center gap-3 w-full p-4 rounded-xl text-emerald-100 hover:bg-red-500/10 hover:text-red-300 transition-all font-bold text-sm"
-        >
-          <LogOut size={18} />
-          <span>{t('logout')}</span>
+      <div className="p-4 mt-auto">
+        <button className="w-full flex items-center gap-4 px-4 py-4 rounded-2xl text-slate-400 hover:text-red-500 hover:bg-red-50 transition-all group">
+          <LogOut size={22} className="group-hover:translate-x-1 transition-transform" />
+          <span className="text-xs font-black uppercase tracking-widest">{t('logout')}</span>
         </button>
       </div>
-    </nav>
+    </aside>
   );
 }

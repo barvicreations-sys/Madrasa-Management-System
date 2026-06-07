@@ -3,7 +3,7 @@ import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || 'dummy_key',
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || 'dummy-key',
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
@@ -17,14 +17,3 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 
 export { db, auth };
-
-export enum OperationType {
-  READ = 'read',
-  WRITE = 'write',
-  DELETE = 'delete'
-}
-
-export function handleFirestoreError(error: any, operation: OperationType) {
-  console.error(`Firestore ${operation} error:`, error);
-  return error.message || 'An error occurred with the database.';
-}

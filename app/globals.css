@@ -1,26 +1,29 @@
 @import "tailwindcss";
 
 @theme {
-  --color-islamic-green: #064e3b;
-  --color-islamic-green-dark: #053d2e;
-  --color-islamic-green-light: #0d7e5d;
-  --color-islamic-gold: #d97706;
-  --color-islamic-gold-light: #f59e0b;
-  --color-madrasa-bg: #f8fafc;
-  --color-madrasa-cream: #F9F1DC;
+  --color-islamic-green: #059669;
+  --color-islamic-green-light: #10b981;
+  --color-islamic-gold: #fbbf24;
 }
 
-:root {
-  --foreground-rgb: 15, 23, 42;
-  --background-start-rgb: 248, 250, 252;
-  --background-end-rgb: 249, 241, 220;
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: var(--color-madrasa-bg);
+@font-face {
+  font-family: 'Jameel Noori Nastaleeq';
+  src: url('https://cdn.jsdelivr.net/gh/googlei18n/noto-fonts-urdu@latest/fonts/NotoNastaliqUrdu-Regular.ttf');
 }
 
 .urdu-font {
-  font-family: 'Noto Nastaliq Urdu', 'Noto Sans Arabic', serif;
+  font-family: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', serif;
+}
+
+body {
+  background-color: #f8fafc;
+  color: #1e293b;
+}
+
+/* Custom patterns and shadows */
+.bg-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, #f1f5f9 1px, transparent 1px),
+    linear-gradient(to bottom, #f1f5f9 1px, transparent 1px);
 }

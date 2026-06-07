@@ -50,7 +50,6 @@ export default function StudentIDCard({ student }: StudentIDCardProps) {
               ) : (
                 <User size={40} className="text-slate-200" />
               )}
-              {/* Overlay ID Badge */}
               <div className="absolute bottom-0 inset-x-0 bg-islamic-green/90 text-white text-[6px] font-black py-0.5 text-center uppercase tracking-tighter">
                 Session 2024-25
               </div>
@@ -84,7 +83,6 @@ export default function StudentIDCard({ student }: StudentIDCardProps) {
               </div>
             </div>
 
-            {/* Signature Area */}
             <div className="pt-2 flex justify-end">
               <div className="text-right">
                 <div className="w-16 border-b border-slate-400 mb-0.5"></div>
@@ -94,7 +92,6 @@ export default function StudentIDCard({ student }: StudentIDCardProps) {
           </div>
         </div>
 
-        {/* Footer Bar */}
         <div className="h-1 bg-islamic-gold"></div>
         <div className="bg-slate-50 p-1 px-3 flex justify-between items-center">
            <span className="text-[5px] font-bold text-slate-400">Jamia Naqshbandia - Education with Ethics</span>
@@ -111,11 +108,11 @@ export default function StudentIDCard({ student }: StudentIDCardProps) {
             visibility: visible;
           }
           .printable-card {
-            position: absolute;
-            left: 0;
-            top: 0;
-            margin: 0;
-            padding: 0;
+            position: absolute !important;
+            left: 0 !important;
+            top: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
             border: none;
             box-shadow: none;
           }
